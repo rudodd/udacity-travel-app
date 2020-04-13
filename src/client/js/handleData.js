@@ -13,14 +13,15 @@ export const getData = async()=> {
   }
 }
 
-export const setUser = async (username)=> {
+export const setData = async (data)=> {
+  console.log(data);
   const response = await fetch('/set-data', {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ 'user': username.value }),
+    body: data,
   });
   try {
     console.log(response);

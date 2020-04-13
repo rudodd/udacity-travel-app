@@ -1,6 +1,6 @@
 import { notEmpty, displayError, hideError } from './js/helpers'
 import { setCookie, getCookie, checkCookie } from './js/cookie'
-import { setUser, getData, addTrip } from './js/handleData'
+import { setData, getData, addTrip } from './js/handleData'
 import { showOverlay, hideOverlay, loadPage } from './js/dom'
 import './styles/resets.scss'
 import './styles/helpers.scss'
@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   showOverlay();
   if (checkCookie()) {
     const data = getCookie();
+    setData(data);
     loadPage(true, data);
   } else {
     hideOverlay();
@@ -23,8 +24,7 @@ document.querySelector('#username form button').addEventListener('click', (e)=> 
   e.preventDefault();
   let user = document.querySelector('#username form input[type=text]');
   if (notEmpty(user)) {
-    hideError(user);
-    setUser(user)
+    setData(JSON.stringify({ 'user': user.value }))
     .then(function() {
       getData()
       .then(function(data) {
@@ -32,6 +32,7 @@ document.querySelector('#username form button').addEventListener('click', (e)=> 
         loadPage(false, data);
       });
     });
+    hideError(user);
   } else {
     displayError(user, 'Please enter a username');
   }
@@ -51,5 +52,11 @@ document.querySelector('#add-trip .cancel').addEventListener('click', function(e
 document.querySelector('#add-trip .submit').addEventListener('click', function(e) {
   e.preventDefault();
   const location = document.querySelector('#trip-location').value;
-  addTrip(location, '01/25/2021');
+  addTrip(location, '01/25/2021')
+  .then(function() {
+    getData()
+    .then(function(data) {
+      setCookie(data);
+    });
+  });
 });

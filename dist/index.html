@@ -13,7 +13,7 @@
       <nav>
         <ul>
           <li>
-            <button>Clear Results</button>
+            <button class="hidden">Add a trip</button>
           </li>
         </ul>
       </nav>
@@ -28,12 +28,24 @@
         <button>Begin</button>
       </form>
     </section>
+    <section id="main">
+      <h2 id="welome-message" class="hidden">Welcome to your travel planner</h2>
+    </section>
   </main>
   <footer>
     <p>&copy; Copyright 2020 Rustin Dodd</p>
   </footer>
   <div class="overlay">
     <p>Loading...</p>
+  </div>
+  <div id="add-trip" class="hidden">
+    <div class="form">
+      <form>
+        <input id="trip-location" type="text" name="trip-location" value="" placeholder="Enter your destination">
+        <button class="submit">Add Trip</button>
+        <button class="cancel">Cancel</button>
+      </form>
+    </div>
   </div>
 <script type="text/javascript" src="app.js"></script></body>
 </html>

@@ -1,4 +1,4 @@
-let textAnalysis = {};
+let appData = {};
 
 // Bring in environment variables
 const dotenv = require('dotenv');
@@ -30,29 +30,16 @@ app.listen(8080, function () {
   console.log('Example app listening on port 8080!')
 })
 
-function callAylien(text) {
-  return new Promise(resolve => {
-    textapi.sentiment({
-      'url': text
-    }, function(error, response) {
-      if (error === null) {
-        resolve(response);
-      }
-    });
-  });
-}
-
-const getAylienData = async(req, res)=> {
-  let data = await callAylien(req.body.text);
-  try {
-    textAnalysis = data;
-    res.send('posted');
-  } catch(error) {
-    console.log(error);
+const setData = (req, res)=> {
+  if (req.body.user.length) {
+    appData['user'] = req.body.user;
   }
+  res.send('Data set');
 }
 
-app.post('/post-data', getAylienData);
+app.post('/set-data', setData);
+
 app.get('/get-data', function (req, res) {
-  res.send(textAnalysis);
+  console.log(appData);
+  res.send(appData);
 });

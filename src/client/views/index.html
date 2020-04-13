@@ -2,35 +2,34 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>Rustin's Aylien Text Analysis</title>
+  <title>Rustin's Travel Planner</title>
 </head>
 <body>
   <header>
     <div class="logo">
-      <h1>Rustin's NLP</h1>
+      <h1>Rustin's Travel Planner</h1>
     </div>
     <div class="nav">
       <nav>
         <ul>
           <li>
-            <button class="clear-button">Clear Results</button>
+            <button class="hidden">Add a trip</button>
           </li>
         </ul>
       </nav>
     </div>
   </header>
   <main>
-    <section>
-      <form class=""">
-        <div class="error-text hidden">
-          <p>Please enter a valid URL</p>
-        </div>
-        <input id="url" type="text" name="url" value="" placeholder="Enter the URL of an article to analyze">
-        <input type="submit" name="" value="Analyze">
+    <section id="username">
+      <h2>Begin by telling us your name:</h2>
+      <form>
+        <div class="error-text hidden"></div>
+        <input id="username-input" type="text" name="url" value="" placeholder="Enter the URL of an article to analyze">
+        <button>Begin</button>
       </form>
-    <section>
-    <section>
-      <div id="results"></div>
+    </section>
+    <section id="main">
+      <h2 id="welome-message" class="hidden">Welcome to your travel planner</h2>
     </section>
   </main>
   <footer>

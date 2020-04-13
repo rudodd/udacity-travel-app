@@ -14,14 +14,29 @@ export const getData = async()=> {
 }
 
 export const setUser = async (username)=> {
-  console.log(username.value);
   const response = await fetch('/set-data', {
     method: 'POST',
     credentials: 'same-origin',
     headers: {
         'Content-Type': 'application/json',
     },
-    body: JSON.stringify({'user': username.value}),
+    body: JSON.stringify({ 'user': username.value }),
+  });
+  try {
+    console.log(response);
+  } catch(error) {
+    console.log("Error posting data to the server", error);
+  }
+}
+
+export const addTrip = async (location, date)=> {
+  const response = await fetch('/add-trip', {
+    method: 'POST',
+    credentials: 'same-origin',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ 'location': location, 'date': date }),
   });
   try {
     console.log(response);

@@ -7,13 +7,6 @@ dotenv.config();
 var path = require('path')
 const express = require('express')
 
-// Aylien setup
-var aylien = require('aylien_textapi')
-var textapi = new aylien({
-  application_id: process.env.API_ID,
-  application_key: process.env.API_KEY
-});
-
 const app = express()
 
 app.use(express.static('dist'))
@@ -32,9 +25,30 @@ app.listen(8080, function () {
 
 const setData = (req, res)=> {
   if (req.body.user.length) {
-    appData['user'] = req.body.user;
+    appData.user = req.body.user;
   }
   res.send('Data set');
+}
+
+// Great solution found on Stack Overflow - https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+const addTrip = (req, res)=> {
+  const tripId = uuidv4();
+  const tripLocation = req.body.location;
+  const tripDate = req.body.date;
+  const trip = { 'location': tripLocation, 'date': tripDate };
+  if (!appData.trips) {
+    appData.trips = {};
+  }
+  appData.trips[tripId] = trip
+  res.send('Trip added');
+  console.log(appData);
 }
 
 app.post('/set-data', setData);
@@ -43,3 +57,5 @@ app.get('/get-data', function (req, res) {
   console.log(appData);
   res.send(appData);
 });
+
+app.post('/add-trip', addTrip);

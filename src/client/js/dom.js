@@ -10,8 +10,8 @@ export const hideOverlay = ()=> {
   document.querySelector('.overlay').classList.remove('show');
 }
 
-export const loadPage = async (cookie = false, data)=> {
-  if (cookie) {
+export const loadPage = async (localData = false, data)=> {
+  if (localData) {
     await setupPage(JSON.parse(data), 'Welcome back');
     try {
       hideOverlay();

@@ -1,4 +1,4 @@
-import { notEmpty, displayError, hideError } from './js/helpers'
+import { notEmpty, displayError, hideError, hideAddTripForm, hideErrors } from './js/helpers'
 import { setCookie, getCookie, checkCookie } from './js/cookie'
 import { setData, getData, addTrip } from './js/handleData'
 import { showOverlay, hideOverlay, loadPage } from './js/dom'
@@ -11,8 +11,8 @@ import './styles/header.scss'
 
 document.addEventListener('DOMContentLoaded', ()=> {
   showOverlay();
-  if (checkCookie()) {
-    const data = getCookie();
+  if (localStorage.getItem('travelData')) {
+    const data = localStorage.getItem('travelData');
     setData(data);
     loadPage(true, data);
   } else {
@@ -28,7 +28,7 @@ document.querySelector('#username form button').addEventListener('click', (e)=> 
     .then(function() {
       getData()
       .then(function(data) {
-        setCookie(data);
+        localStorage.setItem('travelData', JSON.stringify(data));
         loadPage(false, data);
       });
     });
@@ -39,6 +39,8 @@ document.querySelector('#username form button').addEventListener('click', (e)=> 
 });
 
 // Add trip form
+const location = document.querySelector('#trip-location');
+const date = document.querySelector('#trip-date');
 const addTripForm = document.querySelector('#add-trip');
 document.querySelector('.nav button').addEventListener('click', function(e) {
   e.preventDefault();
@@ -46,17 +48,27 @@ document.querySelector('.nav button').addEventListener('click', function(e) {
 });
 document.querySelector('#add-trip .cancel').addEventListener('click', function(e) {
   e.preventDefault();
-  document.querySelector('#add-trip input').value = null;
-  addTripForm.classList.add('hidden');
+  hideAddTripForm();
 });
 document.querySelector('#add-trip .submit').addEventListener('click', function(e) {
   e.preventDefault();
-  const location = document.querySelector('#trip-location').value;
-  addTrip(location, '01/25/2021')
-  .then(function() {
-    getData()
-    .then(function(data) {
-      setCookie(data);
+  if (notEmpty(location) && notEmpty(date)) {
+    hideAddTripForm();
+    showOverlay();
+    addTrip(location.value, date.value)
+    .then(function() {
+      getData()
+      .then(function(data) {
+        localStorage.setItem('travelData', JSON.stringify(data));
+        hideOverlay();
+      });
     });
-  });
+  } else {
+    if (!notEmpty(location)) {
+      displayError(location, 'Please enter a city');
+    }
+    if (!notEmpty(date)) {
+      displayError(date, 'Please enter a trip date');
+    }
+  }
 });

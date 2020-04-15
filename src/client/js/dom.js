@@ -217,7 +217,6 @@ export const addTripsToDom = (data)=> {
 
 // Remove existing trips from the DOM
 const removeTrip = (e)=> {
-  showOverlay();
   let tripId;
   if (e.target.parentElement.parentElement.classList.contains('trip-expired')) {
     tripId = e.target.parentElement.parentElement.parentElement.getAttribute('id');

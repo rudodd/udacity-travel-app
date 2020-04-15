@@ -26,7 +26,6 @@ app.listen(8080, function () {
 
 let appData = {};
 const setData = (req, res)=> {
-  console.log(req.body);
   appData = req.body;
   res.send('Data set');
 }
@@ -58,7 +57,6 @@ const getWeather = async (lat, lng, type, date = null)=> {
   } else if (type == 'historical') {
     url = `https://api.weatherbit.io/v2.0/normals?lat=${lat}&lon=${lng}&start_day=${date.getMonth()}-${date.getDate()}&end_day=${date.getMonth()}-${date.getDate()}&tp=daily&units=I&key=${process.env.WEATHER_API_KEY}`;
   }
-  console.log(url);
   let response = await fetch(url);
   try {
     let data = await response.json();
@@ -113,9 +111,7 @@ const addTrip = (req, res)=> {
         }
         const d = new Date();
         d.setDate(d.getDate()+16);
-        console.log('trip: ' + trip.date + ' d: ' + d);
         if (trip.date <= d) {
-          console.log('date before');
           getWeather(trip.lat, trip.lng, 'forecast')
           .then(function(data) {
             i = 0;
@@ -132,10 +128,8 @@ const addTrip = (req, res)=> {
             }
             appData.trips[tripId] = trip
             res.send('Trip added');
-            console.log(appData);
           });
         } else {
-          console.log('date after');
           getWeather(trip.lat, trip.lng, 'historical', trip.date)
           .then(function(data) {
             trip.weather = { 'type': 'historical', 'data': data };
@@ -144,7 +138,6 @@ const addTrip = (req, res)=> {
             }
             appData.trips[tripId] = trip
             res.send('Trip added');
-            console.log(appData);
           })
         }
       });

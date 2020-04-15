@@ -11,16 +11,20 @@ button {
   border: 0;
   border-radius: 3px;
   cursor: pointer;
+  transition: ease all 0.25s;
 
-  &.edit {
-    background: white;
-    color: #006994;
-    border: solid 2px #006994;
+  &:hover {
+    background: #004864;
   }
 
   &.remove {
     background: white;
-    color: #8b0000;;
+    color: #8b0000;
     border: solid 2px #8b0000;
+
+    &:hover {
+      background: #8b0000;
+      color: white;
+    }
   }
 }

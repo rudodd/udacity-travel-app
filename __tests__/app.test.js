@@ -1,10 +1,7 @@
-import { isUrl } from '../src/client/js/formHandler'
-import { updateDom } from '../src/client/js/updateDom';
+// Tests
+import { notEmpty } from '../src/client/js/helpers'
 
-test('checks if url is valid', () => {
-  expect(isUrl('asdfasdfasdfasdf')).toBe(false);
-});
-
-test('updateDom should return false if no data is passed to it', () => {
-  expect(updateDom(null)).toBe(false);
+const testField = document.createElement('input');
+test('checks if field is empty', () => {
+  expect(notEmpty(testField)).toBe(false);
 });

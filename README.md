@@ -1,9 +1,17 @@
-# Rustin's NLP Project
+# Rustin's Travel Planner
 
 ## What it does
-This little app consists of a simple form that allows a URL to be submitted.  The submitted URL is then run though the Aylien text analysis API and the results are shown to the user.
+Rustin's Travel Planner allows the user to add and remove trips.  It displays an image, a countodown, and weather information for the trips.
 
 ## How it works
-The app first uses regex to determine if the form field contains a URL.  If it does not, an error message is presented to the user. If it does contain a URL, it posts the URL to the server, where an async call is made to the Aylien API.  Upon completion of the API call, it saves the data off to the textAnalysis object and resolves. Once the Aylien API call has resolved, an async get call is made to the server to retieve the data that was saved off to the textAnalysis object.  Once this async function has resolved, the DOM is updated to show the results of the API query.
+The app uses a mix of localStorage and an an object at the server level to store data inputed by the user and APIs.
 
-Additionally there is "Clear results" button that removes previous results, or errors, and resets the form.
+### API Calls
+The app makles three API calls - geoCode(), getWeather(), and getImages()
+
+  - The geoCode call simply fetches the longitude, laditude, and country from the geonames API for a given location
+  - The getWeather function makes two different calls depending on the date of the trip, one gets historical info, and one gets forecast data from the weatherbits.io API
+  - The getImages call simply searches the pixaby API for images related to the location using the location name as a keyword
+
+### Local storage
+The uses local storage to ensure that if the user leaves and returns the data from their previous session is still available.

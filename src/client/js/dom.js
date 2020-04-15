@@ -3,7 +3,15 @@
  */
 
 import { getData, setData } from './handleData'
-import { showOverlay, hideOverlay } from './helpers'
+
+// Show / hide overlay
+export const showOverlay = ()=> {
+  document.querySelector('.overlay').classList.add('show');
+}
+
+export const hideOverlay = ()=> {
+  document.querySelector('.overlay').classList.remove('show');
+}
 
 // Load page function for various dom manipulations
 export const loadPage = async (localData = false, data)=> {

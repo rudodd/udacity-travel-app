@@ -2,16 +2,6 @@
  * Helper Functions
  */
 
-// Overlay helpers
-export const showOverlay = ()=> {
-  document.querySelector('.overlay').classList.add('show');
-}
-
-export const hideOverlay = ()=> {
-  document.querySelector('.overlay').classList.remove('show');
-}
-
-
 // Form Helpers
 export const notEmpty = (field)=> {
   if (field.value.length) {

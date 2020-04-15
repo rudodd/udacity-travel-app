@@ -31,8 +31,17 @@ export const hideError = (field)=> {
 }
 
 export const hideAddTripForm = ()=> {
-  hideError(document.querySelector('#trip-location'));
-  hideError(document.querySelector('#trip-date'));
-  document.querySelector('#add-trip input').value = null;
-  document.querySelector('#add-trip').classList.add('hidden');
+  const locationInput = document.querySelector('#trip-location');
+  const dateInput = document.querySelector('#trip-date');
+  if (locationInput.classList.contains('error')) {
+    hideError(locationInput);
+  }
+  if (dateInput.classList.contains('error')) {
+    hideError(dateInput);
+  }
+  document.querySelector('#add-trip-container').classList.add('hidden');
+}
+
+export const clearForm = (formId)=> {
+  document.getElementById(formId).reset();
 }

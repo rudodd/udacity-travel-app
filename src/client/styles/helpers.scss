@@ -1,3 +1,26 @@
 .hidden {
   display: none;
 }
+
+button {
+  background: #006994;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 7px 15px;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+
+  &.edit {
+    background: white;
+    color: #006994;
+    border: solid 2px #006994;
+  }
+
+  &.remove {
+    background: white;
+    color: #8b0000;;
+    border: solid 2px #8b0000;
+  }
+}

@@ -1,7 +1,7 @@
-import { notEmpty, displayError, hideError, hideAddTripForm, hideErrors } from './js/helpers'
+import { notEmpty, displayError, hideError, hideAddTripForm, clearForm } from './js/helpers'
 import { setCookie, getCookie, checkCookie } from './js/cookie'
 import { setData, getData, addTrip } from './js/handleData'
-import { showOverlay, hideOverlay, loadPage } from './js/dom'
+import { showOverlay, hideOverlay, loadPage, addTripsToDom } from './js/dom'
 import './styles/resets.scss'
 import './styles/helpers.scss'
 import './styles/base.scss'
@@ -41,12 +41,11 @@ document.querySelector('#username form button').addEventListener('click', (e)=> 
 // Add trip form
 const location = document.querySelector('#trip-location');
 const date = document.querySelector('#trip-date');
-const addTripForm = document.querySelector('#add-trip');
 document.querySelector('.nav button').addEventListener('click', function(e) {
   e.preventDefault();
-  addTripForm.classList.remove('hidden');
+  document.querySelector('#add-trip-container').classList.remove('hidden');
 });
-document.querySelector('#add-trip .cancel').addEventListener('click', function(e) {
+document.querySelector('#add-trip .remove').addEventListener('click', function(e) {
   e.preventDefault();
   hideAddTripForm();
 });
@@ -60,7 +59,11 @@ document.querySelector('#add-trip .submit').addEventListener('click', function(e
       getData()
       .then(function(data) {
         localStorage.setItem('travelData', JSON.stringify(data));
-        hideOverlay();
+        addTripsToDom(data)
+        .then(function() {
+          clearForm('add-trip');
+          hideOverlay();
+        })
       });
     });
   } else {

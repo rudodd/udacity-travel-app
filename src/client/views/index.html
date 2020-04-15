@@ -13,7 +13,7 @@
       <nav>
         <ul>
           <li>
-            <button class="hidden">Add a trip</button>
+            <button class="hidden"><i class="fas fa-plus"></i> Add a trip</button>
           </li>
         </ul>
       </nav>
@@ -24,12 +24,12 @@
       <h2>Begin by telling us your name:</h2>
       <form>
         <div class="error-text hidden"></div>
-        <input id="username-input" type="text" name="url" value="" placeholder="Enter the URL of an article to analyze">
+        <input id="username-input" type="text" name="url" value="" placeholder="Enter your name">
         <button>Begin</button>
       </form>
     </section>
     <section id="main">
-      <h2 id="welome-message" class="hidden">Welcome to your travel planner</h2>
+      <h2 id="welcome-message" class="hidden">Welcome to your travel planner</h2>
     </section>
   </main>
   <footer>
@@ -38,15 +38,20 @@
   <div class="overlay">
     <p>Loading...</p>
   </div>
-  <div id="add-trip" class="hidden">
+  <div id="add-trip-container" class="hidden">
     <div class="form">
-      <form>
-        <input id="trip-location" type="text" name="trip-location" placeholder="Enter your destination">
-        <input id="trip-date" type="date" name="trip-date">
-        <button class="submit">Add Trip</button>
-        <button class="cancel">Cancel</button>
+      <form id="add-trip">
+        <label>Destination
+          <input id="trip-location" type="text" name="trip-location" placeholder="Enter your destination">
+        </label>
+        <label>Departure Date
+          <input id="trip-date" type="date" name="trip-date">
+        </label>
+        <button class="submit"><i class="fas fa-plus"></i> Add Trip</button>
+        <button class="remove">Cancel</button>
       </form>
     </div>
   </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 </html>

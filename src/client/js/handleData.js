@@ -6,7 +6,6 @@ export const getData = async()=> {
   let request = await fetch('/get-data');
   try {
     let data = await request.json();
-    console.log(data);
     return data;
   } catch(error) {
     console.log(error);
@@ -14,7 +13,6 @@ export const getData = async()=> {
 }
 
 export const setData = async (data)=> {
-  console.log(data);
   const response = await fetch('/set-data', {
     method: 'POST',
     credentials: 'same-origin',
@@ -24,7 +22,7 @@ export const setData = async (data)=> {
     body: data,
   });
   try {
-    console.log(response);
+    return response;
   } catch(error) {
     console.log("Error posting data to the server", error);
   }
@@ -40,7 +38,7 @@ export const addTrip = async (location, date)=> {
     body: JSON.stringify({ 'location': location, 'date': date }),
   });
   try {
-    console.log(response);
+    return response;
   } catch(error) {
     console.log("Error posting data to the server", error);
   }

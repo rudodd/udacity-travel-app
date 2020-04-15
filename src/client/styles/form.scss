@@ -9,6 +9,14 @@ form {
   padding: 40px;
   box-shadow: 0 0 5px 5px rgba(0,0,0, 0.015);
 
+  &#add-trip {
+    max-width: 350px;
+
+    button {
+      margin-top: 10px;
+    }
+  }
+
   input {
     padding: 5px 20px;
     width: 100%;
@@ -48,13 +56,14 @@ form {
   }
 }
 
-#add-trip {
+#add-trip-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(250,250,250,0.85);
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
 
   .form {
     position: absolute;

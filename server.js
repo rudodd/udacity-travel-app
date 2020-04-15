@@ -50,8 +50,15 @@ const geoCode = async (location)=> {
   }
 }
 
-const getWeather = async (lat, lng)=> {
-  let response = await fetch(`https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&days=16&key=${process.env.WEATHER_API_KEY}`);
+const getWeather = async (lat, lng, type, date = null)=> {
+  let url;
+  if (type == 'forecast') {
+    url = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&days=16&units=I&key=${process.env.WEATHER_API_KEY}`;
+  } else if (type == 'historical') {
+    url = `https://api.weatherbit.io/v2.0/normals?lat=${lat}&lon=${lng}&start_day=${date.getMonth()}-${date.getDate()}&end_day=${date.getMonth()}-${date.getDate()}&tp=daily&units=I&key=${process.env.WEATHER_API_KEY}`;
+  }
+  console.log(url);
+  let response = await fetch(url);
   try {
     let data = await response.json();
     return data;
@@ -62,7 +69,7 @@ const getWeather = async (lat, lng)=> {
 
 const getImage = async (location)=> {
   urlLocation = encodeURI(location);
-  let response = await fetch(`https://pixabay.com/api/?key=${process.env.PIXABY_API_KEY}&q=${urlLocation}&image_type=photo`);
+  let response = await fetch(`https://pixabay.com/api/?key=${process.env.PIXABY_API_KEY}&q=city+${urlLocation}&orientation=horizontal&category=places&order=popular&image_type=photo`);
   try {
     let data = await response.json();
     return data;
@@ -103,8 +110,10 @@ const addTrip = (req, res)=> {
         }
         const d = new Date();
         d.setDate(d.getDate()+16);
+        console.log('trip: ' + trip.date + ' d: ' + d);
         if (trip.date <= d) {
-          getWeather(trip.lat, trip.lng)
+          console.log('date before');
+          getWeather(trip.lat, trip.lng, 'forecast')
           .then(function(data) {
             i = 0;
             weatherData = {};
@@ -114,7 +123,7 @@ const addTrip = (req, res)=> {
                 i++;
               }
             }
-            trip.weather = { 'exists': true, 'data': weatherData };
+            trip.weather = { 'type': 'forecast', 'data': weatherData };
             if (!appData.trips) {
               appData.trips = {};
             }
@@ -123,13 +132,17 @@ const addTrip = (req, res)=> {
             console.log(appData);
           });
         } else {
-          trip.weather = { 'exists': false };
-          if (!appData.trips) {
-            appData.trips = {};
-          }
-          appData.trips[tripId] = trip
-          res.send('Trip added');
-          console.log(appData);
+          console.log('date after');
+          getWeather(trip.lat, trip.lng, 'historical', trip.date)
+          .then(function(data) {
+            trip.weather = { 'type': 'historical', 'data': data };
+            if (!appData.trips) {
+              appData.trips = {};
+            }
+            appData.trips[tripId] = trip
+            res.send('Trip added');
+            console.log(appData);
+          })
         }
       });
     });

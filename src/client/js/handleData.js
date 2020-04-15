@@ -2,6 +2,7 @@
  * Function to handle data
  */
 
+// Get data from the server
 export const getData = async()=> {
   let request = await fetch('/get-data');
   try {
@@ -12,6 +13,7 @@ export const getData = async()=> {
   }
 }
 
+// Set data object on the server
 export const setData = async (data)=> {
   const response = await fetch('/set-data', {
     method: 'POST',
@@ -28,6 +30,7 @@ export const setData = async (data)=> {
   }
 }
 
+// Add a trip to the data set on the server
 export const addTrip = async (location, date)=> {
   const response = await fetch('/add-trip', {
     method: 'POST',

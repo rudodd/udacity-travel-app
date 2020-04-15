@@ -1,5 +1,4 @@
 import { notEmpty, displayError, hideError, hideAddTripForm, clearForm } from './js/helpers'
-import { setCookie, getCookie, checkCookie } from './js/cookie'
 import { setData, getData, addTrip } from './js/handleData'
 import { showOverlay, hideOverlay, loadPage, addTripsToDom } from './js/dom'
 import './styles/resets.scss'
@@ -9,6 +8,7 @@ import './styles/footer.scss'
 import './styles/form.scss'
 import './styles/header.scss'
 
+// On page load determine what to display
 document.addEventListener('DOMContentLoaded', ()=> {
   showOverlay();
   if (localStorage.getItem('travelData')) {
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
   }
 });
 
+// Add username from
 document.querySelector('#username form button').addEventListener('click', (e)=> {
   e.preventDefault();
   let user = document.querySelector('#username form input[type=text]');

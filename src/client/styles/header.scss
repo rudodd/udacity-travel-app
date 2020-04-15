@@ -12,3 +12,16 @@ header {
     }
   }
 }
+
+@media (max-width: 500px) {
+  header {
+    display: block;
+    padding: 0;
+    width: 90%;
+    margin: auto;
+
+    .logo {
+      padding: 10px 0;
+    }
+  }
+}

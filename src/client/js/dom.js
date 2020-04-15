@@ -3,15 +3,9 @@
  */
 
 import { getData, setData } from './handleData'
+import { showOverlay, hideOverlay } from './helpers'
 
-export const showOverlay = ()=> {
-  document.querySelector('.overlay').classList.add('show');
-}
-
-export const hideOverlay = ()=> {
-  document.querySelector('.overlay').classList.remove('show');
-}
-
+// Load page function for various dom manipulations
 export const loadPage = async (localData = false, data)=> {
   if (localData) {
     await setupPage(JSON.parse(data), 'Welcome back,');
@@ -30,6 +24,7 @@ export const loadPage = async (localData = false, data)=> {
   }
 }
 
+// Create various DOM elements based on the data provided
 function setupPage(data, message) {
   return new Promise(resolve => {
     document.querySelector('#username').classList.add('hidden');
@@ -73,7 +68,7 @@ function setupPage(data, message) {
     } else {
       const noTrips = document.createElement('p');
       noTrips.classList.add('no-results');
-      noTrips.innerText = `You haven't added any trip yet.  Add a trip to see it here.`;
+      noTrips.innerText = `You haven't added any trips yet.  Add a trip to see it here.`;
       if (!document.querySelector('.trip-list-container')) {
         tripContainer.appendChild(noTrips);
       } else {
@@ -84,6 +79,7 @@ function setupPage(data, message) {
   });
 }
 
+// Add new trips to the DOM
 export const addTripsToDom = (data)=> {
   return new Promise(resolve => {
     const trips = Object.entries(data.trips);
@@ -211,7 +207,9 @@ export const addTripsToDom = (data)=> {
   });
 }
 
+// Remove existing trips from the DOM
 const removeTrip = (e)=> {
+  showOverlay();
   let tripId;
   if (e.target.parentElement.parentElement.classList.contains('trip-expired')) {
     tripId = e.target.parentElement.parentElement.parentElement.getAttribute('id');

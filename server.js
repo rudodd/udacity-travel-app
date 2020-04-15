@@ -50,6 +50,7 @@ const geoCode = async (location)=> {
   }
 }
 
+// Get weather data
 const getWeather = async (lat, lng, type, date = null)=> {
   let url;
   if (type == 'forecast') {
@@ -67,6 +68,7 @@ const getWeather = async (lat, lng, type, date = null)=> {
   }
 }
 
+// Get image
 const getImage = async (location)=> {
   urlLocation = encodeURI(location);
   let response = await fetch(`https://pixabay.com/api/?key=${process.env.PIXABY_API_KEY}&q=city+${urlLocation}&orientation=horizontal&category=places&order=popular&image_type=photo`);
@@ -78,6 +80,7 @@ const getImage = async (location)=> {
   }
 }
 
+// Add a trip to the data object
 const addTrip = (req, res)=> {
   let tripId = uuidv4();
   if (req.body.id) {

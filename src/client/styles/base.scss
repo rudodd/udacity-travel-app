@@ -9,7 +9,8 @@ body {
     flex: 2;
 
     section {
-      max-width: 800px;
+      width: 800px;
+      max-width: 90%;
       margin: 50px auto;
 
       &#username h2 {
@@ -180,6 +181,17 @@ body {
                   }
                 }
               }
+            }
+          }
+        }
+
+        @media (max-width: 650px) {
+          .trip-container {
+            display: block;
+
+            .trip-info, .trip-image {
+              width: 100%;
+              padding: 0;
             }
           }
         }
